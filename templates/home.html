@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+    <title>Título</title>
+    <meta charset="UTF-8"/>
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet"/>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+</head>
+<body>
+<form role="form" method="post" id="form_id" action=".">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" id="name" name="name"/>
+    </div>
+    <label for="photo">Incluya una foto</label>
+    <div class="drag-drop">
+        <input type="file" id="file_name" name="file_name" accept="image/png, image/jpeg">
+    </div>
+    <button type="submit" class="btn btn-primary" id="submit_id">Enviar</button>
+    <button type="reset" class="btn btn-default">Cancelar</button>
+</form>
+</body>
+</html>
+
+{% if response == 1%}
+    <script type="text/javascript">
+        console.log('que mismo?');
+        alert("subido con exito");
+    </script>
+{% endif %}
+
+<script>
+    $("#submit_id").click('#submit_id',async function (e) {
+        //---necesario para un correcto funcionamiento---
+        e.preventDefault();
+        //-----------------------------------------------
+        btnClicked = 'CONSULT'; // se utiliza para en el servidor hacer primero una consulta y luego la descarga
+        form = document.querySelector('#form_id');
+        fields = new FormData(form);
+        fields.append(btnClicked, '');
+
+        const response = await fetch(form.action, {
+            method: form.method, // *GET, POST, PUT, DELETE, etc.
+            mode: 'cors', // no-cors, *cors, same-origin
+            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: 'same-origin', // include, *same-origin, omit
+            /*
+            headers: {
+                //'Content-Type': 'application/json'
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            */
+            redirect: 'follow', // manual, *follow, error
+            referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+            body: fields // body data type must match "Content-Type" header
+        });
+    });
+</script>
+
+<style>
+    form {
+        width: 25em;
+        padding: 1em;
+        border: 1px solid #ccc;
+        border-radius: .5em;
+        margin: 1em;
+        box-shadow: .25em .25em 0 #ccc;
+    }
+
+
+    @keyframes pulse1 {
+        0% {
+            color: rgba(225, 225, 225, .75);
+        }
+        50% {
+            color: rgba(225, 225, 225, 0.25);
+        }
+        100% {
+            color: rgba(225, 225, 225, .75);
+        }
+    }
+
+    @-moz-keyframes pulse1 {
+        0% {
+            color: rgba(225, 225, 225, .75);
+        }
+        50% {
+            color: rgba(225, 225, 225, 0.25);
+        }
+        100% {
+            color: rgba(225, 225, 225, .75);
+        }
+    }
+
+    @-webkit-keyframes pulse1 {
+        0% {
+            color: rgba(225, 225, 225, .75);
+        }
+        50% {
+            color: rgba(225, 225, 225, 0.25);
+        }
+        100% {
+            color: rgba(225, 225, 225, .75);
+        }
+    }
+
+    @-ms-keyframes pulse1 {
+        0% {
+            color: rgba(225, 225, 225, .75);
+        }
+        50% {
+            color: rgba(225, 225, 225, 0.25);
+        }
+        100% {
+            color: rgba(225, 225, 225, .75);
+        }
+    }
+</style>
